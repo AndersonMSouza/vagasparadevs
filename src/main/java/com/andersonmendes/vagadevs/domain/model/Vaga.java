@@ -14,8 +14,7 @@ public class Vaga {
 
 	@Id
 	@EqualsAndHashCode.Include
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long id;
 	private String nome;
 	private String descricao;
