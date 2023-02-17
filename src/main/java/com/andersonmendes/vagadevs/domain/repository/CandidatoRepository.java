@@ -8,4 +8,6 @@ import com.andersonmendes.vagadevs.domain.model.Candidato;
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, Long>{
 
+	//List<Candidato> findByNomeContaining(String nomeCandidato);
+	
 }

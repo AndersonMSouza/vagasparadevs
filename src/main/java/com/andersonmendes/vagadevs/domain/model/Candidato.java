@@ -17,8 +17,8 @@ public class Candidato {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String cpf;
 	private String nomeCandidato;
-	private String email;	
+	private String email;
+	private String cpf;
 
 }
