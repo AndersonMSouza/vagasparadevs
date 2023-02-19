@@ -1,9 +1,13 @@
 package com.andersonmendes.vagadevs.domain.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,5 +24,8 @@ public class Vaga {
 	private String descricao;
 	private String data;
 	private String salario;
+	
+	@OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE)
+	private List<Candidato> candidatos;
 	
 }
