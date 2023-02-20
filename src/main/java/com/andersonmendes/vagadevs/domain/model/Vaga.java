@@ -24,8 +24,8 @@ public class Vaga {
 	private String descricao;
 	private String data;
 	private String salario;
+	private StatusVaga statusVaga;
 	
 	@OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE)
 	private List<Candidato> candidatos;
-	
 }
