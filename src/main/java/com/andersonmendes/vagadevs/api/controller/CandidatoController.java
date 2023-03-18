@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andersonmendes.vagadevs.domain.exceptions.EntidadeEmUsoException;
 import com.andersonmendes.vagadevs.domain.exceptions.EntidadeNaoEncontradaException;
 import com.andersonmendes.vagadevs.domain.model.Candidato;
 import com.andersonmendes.vagadevs.domain.repository.CandidatoRepository;
@@ -36,12 +36,7 @@ public class CandidatoController {
 	public List<Candidato> listar() {
 		return candidatoRepository.findAll();
 	}
-	
-//	@GetMapping("/candidato-por-nome")
-//	public List<Candidato> porNome(String nomeCandidato) {
-//		return candidatoRepository.findByNomeContaining(nomeCandidato);
-//	}	
-	
+		
 	@GetMapping("/{candidatoId}")
 	public ResponseEntity<Candidato> buscar(@PathVariable Long candidatoId) {
 		Optional<Candidato> candidato = candidatoRepository.findById(candidatoId);
@@ -83,17 +78,9 @@ public class CandidatoController {
 	}
 	
 	@DeleteMapping("/{candidatoId}")
-	public ResponseEntity<Candidato> remover(@PathVariable Long candidatoId) {
-		try {
-			cadastroCandidatoService.excluir(candidatoId);
-			return ResponseEntity.noContent().build();
-			
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.notFound().build();
-		
-		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}		
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long candidatoId) {		
+		cadastroCandidatoService.excluir(candidatoId);				
 	}
 	
 }
