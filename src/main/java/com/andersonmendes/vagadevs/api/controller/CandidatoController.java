@@ -43,14 +43,9 @@ public class CandidatoController {
 	}	
 	
 	@PostMapping
-	public ResponseEntity<?> adicionar(@RequestBody Candidato candidato) {
-		try {
-			candidato = cadastroCandidatoService.salvar(candidato);
-			return ResponseEntity.status(HttpStatus.CREATED).body(candidato);
-		
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	@ResponseStatus(HttpStatus.CREATED)
+	public Candidato adicionar(@RequestBody Candidato candidato) {
+		return cadastroCandidatoService.salvar(candidato);
 	}
 	
 	@PutMapping("/{candidatoId}")
