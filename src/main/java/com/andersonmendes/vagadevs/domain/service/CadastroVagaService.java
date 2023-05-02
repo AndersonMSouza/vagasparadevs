@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.andersonmendes.vagadevs.domain.exceptions.EntidadeEmUsoException;
 import com.andersonmendes.vagadevs.domain.exceptions.EntidadeNaoEncontradaException;
@@ -31,6 +32,12 @@ public class CadastroVagaService {
 			throw new EntidadeEmUsoException(
 				String.format("Loja de código %d não pode ser removida, pois está em uso!", vagaId));
 		}
-	}	
+	}
+	
+	public Vaga buscarOuFalhar(@PathVariable Long vagaId) {
+		return vagaRepository.findById(vagaId)
+			.orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format("Não existe loja cadastrada com o código %d", vagaId)));
+	}
 	
 }

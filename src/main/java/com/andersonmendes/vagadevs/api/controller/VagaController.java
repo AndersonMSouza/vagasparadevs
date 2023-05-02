@@ -43,14 +43,8 @@ public class VagaController {
 	}	
 	
 	@GetMapping("/{vagaId}")
-	public ResponseEntity<Vaga> buscar(@PathVariable Long vagaId) {
-		Optional<Vaga> vaga = vagaRepository.findById(vagaId);
-	
-		if (vaga.isPresent()) {
-			return ResponseEntity.ok(vaga.get()); 
-		}
-		
-		return ResponseEntity.notFound().build();	
+	public Vaga buscar(@PathVariable Long vagaId) {
+		return cadastroVagaService.buscarOuFalhar(vagaId);
 	}	
 	
 	@PostMapping
