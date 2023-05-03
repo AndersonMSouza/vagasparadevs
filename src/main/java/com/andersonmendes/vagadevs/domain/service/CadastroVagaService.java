@@ -14,6 +14,12 @@ import com.andersonmendes.vagadevs.domain.repository.VagaRepository;
 @Service
 public class CadastroVagaService {
 	
+	private static final String MSG_VAGA_EM_USO 
+	= "Vaga de código %d não pode ser removida, pois está em uso";
+
+	private static final String MSG_VAGA_NAO_ENCONTRADA 
+	= "Não existe um cadastro de vaga com código %d";
+	
 	@Autowired
 	private VagaRepository vagaRepository;
 
@@ -26,18 +32,18 @@ public class CadastroVagaService {
 			vagaRepository.deleteById(vagaId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-				String.format("Não existe loja cadastrada com o código %d", vagaId));
+				String.format(MSG_VAGA_NAO_ENCONTRADA, vagaId));
 		
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-				String.format("Loja de código %d não pode ser removida, pois está em uso!", vagaId));
+				String.format(MSG_VAGA_EM_USO, vagaId));
 		}
 	}
 	
 	public Vaga buscarOuFalhar(@PathVariable Long vagaId) {
 		return vagaRepository.findById(vagaId)
 			.orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe loja cadastrada com o código %d", vagaId)));
+				String.format(MSG_VAGA_NAO_ENCONTRADA, vagaId)));
 	}
 	
 }
