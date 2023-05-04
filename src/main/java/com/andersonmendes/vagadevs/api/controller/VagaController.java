@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andersonmendes.vagadevs.domain.exceptions.EntidadeEmUsoException;
@@ -48,14 +49,9 @@ public class VagaController {
 	}	
 	
 	@PostMapping
-	public ResponseEntity<?> adicionar(@RequestBody Vaga vaga) {
-		try {
-			vaga = cadastroVagaService.salvar(vaga);
-			return ResponseEntity.status(HttpStatus.CREATED).body(vaga);
-		
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	@ResponseStatus(HttpStatus.CREATED)
+	public Vaga adicionar(@RequestBody Vaga vaga) {
+		return cadastroVagaService.salvar(vaga);
 	}
 	
 	@PutMapping("/{vagaId}")
