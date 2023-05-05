@@ -64,17 +64,9 @@ public class VagaController {
 	}
 	
 	@DeleteMapping("/{vagaId}")
-	public ResponseEntity<Vaga> remover(@PathVariable Long vagaId) {
-		try {
-			cadastroVagaService.excluir(vagaId);
-			return ResponseEntity.noContent().build();
-			
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.notFound().build();
-		
-		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}		
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long vagaId) {
+		cadastroVagaService.excluir(vagaId);	
 	}
 	
 	
