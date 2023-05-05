@@ -1,7 +1,6 @@
 package com.andersonmendes.vagadevs.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,21 +54,13 @@ public class VagaController {
 	}
 	
 	@PutMapping("/{vagaId}")
-	public ResponseEntity<?> atualizar(@PathVariable Long vagaId, @RequestBody Vaga vaga) {
-		try {
-			Optional<Vaga> vagaAtual = vagaRepository.findById(vagaId);
-			
-			if (vagaAtual.isPresent()) {
-				BeanUtils.copyProperties(vaga, vagaAtual.get(), "id");
-				Vaga vagaSalva = cadastroVagaService.salvar(vagaAtual.get());
-				return ResponseEntity.ok(vagaSalva);
-			}
-			
-			return ResponseEntity.notFound().build();
-			
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public Vaga atualizar(@PathVariable Long vagaId, @RequestBody Vaga vaga) {
+		Vaga vagaAtual = cadastroVagaService.buscarOuFalhar(vagaId);
+		
+		BeanUtils.copyProperties(vaga, vagaAtual, "id");
+		
+		return cadastroVagaService.salvar(vagaAtual);
+				
 	}
 	
 	@DeleteMapping("/{vagaId}")
