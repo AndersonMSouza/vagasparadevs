@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andersonmendes.vagadevs.domain.exceptions.EntidadeEmUsoException;
-import com.andersonmendes.vagadevs.domain.exceptions.EntidadeNaoEncontradaException;
 import com.andersonmendes.vagadevs.domain.model.Vaga;
 import com.andersonmendes.vagadevs.domain.repository.VagaRepository;
 import com.andersonmendes.vagadevs.domain.service.CadastroVagaService;
@@ -67,7 +64,6 @@ public class VagaController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long vagaId) {
 		cadastroVagaService.excluir(vagaId);	
-	}
-	
+	}	
 	
 }
