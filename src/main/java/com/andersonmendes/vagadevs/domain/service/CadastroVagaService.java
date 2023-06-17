@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.andersonmendes.vagadevs.domain.exceptions.EntidadeEmUsoException;
-import com.andersonmendes.vagadevs.domain.exceptions.EntidadeNaoEncontradaException;
+import com.andersonmendes.vagadevs.domain.exceptions.VagaNaoEncontradaException;
 import com.andersonmendes.vagadevs.domain.model.Vaga;
 import com.andersonmendes.vagadevs.domain.repository.VagaRepository;
 
@@ -15,10 +15,7 @@ import com.andersonmendes.vagadevs.domain.repository.VagaRepository;
 public class CadastroVagaService {
 	
 	private static final String MSG_VAGA_EM_USO 
-	= "Vaga de código %d não pode ser removida, pois está em uso";
-
-	private static final String MSG_VAGA_NAO_ENCONTRADA 
-	= "Não existe um cadastro de vaga com código %d";
+		= "Vaga de código %d não pode ser removida, pois está em uso";
 	
 	@Autowired
 	private VagaRepository vagaRepository;
@@ -31,8 +28,7 @@ public class CadastroVagaService {
 		try {
 			vagaRepository.deleteById(vagaId);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
-				String.format(MSG_VAGA_NAO_ENCONTRADA, vagaId));
+			throw new VagaNaoEncontradaException(vagaId);
 		
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
@@ -42,8 +38,7 @@ public class CadastroVagaService {
 	
 	public Vaga buscarOuFalhar(@PathVariable Long vagaId) {
 		return vagaRepository.findById(vagaId)
-			.orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format(MSG_VAGA_NAO_ENCONTRADA, vagaId)));
+			.orElseThrow(() -> new VagaNaoEncontradaException(vagaId));
 	}
 	
 }
